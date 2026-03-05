@@ -1,3 +1,5 @@
+using GestionPasantias.Application.Interfaces;
+using GestionPasantias.Infrastructure.Repositories;
 using GestionPasantias.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +11,8 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

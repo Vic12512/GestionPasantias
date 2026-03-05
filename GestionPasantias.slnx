@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/GestionPasantias.API/GestionPasantias.API.csproj" />
+    <Project Path="src/GestionPasantias.Application/GestionPasantias.Application.csproj" />
+    <Project Path="src/GestionPasantias.Domain/GestionPasantias.Domain.csproj" />
+    <Project Path="src/GestionPasantias.Infrastructure/GestionPasantias.Infrastructure.csproj" />
+  </Folder>
+</Solution>

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using GestionPasantias.Domain.Entities;
-using Microsoft.Identity.Client;
+
 
 namespace GestionPasantias.Infrastructure.Data;
 

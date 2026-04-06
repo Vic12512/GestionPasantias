@@ -10,6 +10,6 @@ public class Universidad
     // Navigation
     public User User {get; set;} = null!;
 
-    public ICollection<Carrera> carreras {get; set;} = new List<Carrera>();
+    public ICollection<Carrera> Carreras {get; set;} = new List<Carrera>();
     public ICollection<Tutor> Tutores {get; set;} = new List<Tutor>();
 }

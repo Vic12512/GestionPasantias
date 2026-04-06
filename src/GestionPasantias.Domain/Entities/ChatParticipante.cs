@@ -7,7 +7,7 @@ public class ChatParticipante
     public int UserId { get; set; }
 
 
-    // 🔗 Navigation
+    // Navigation
     public Chat Chat { get; set; } = null!;
 
     public User User { get; set; } = null!;

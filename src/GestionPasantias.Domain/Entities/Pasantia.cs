@@ -9,7 +9,7 @@ public class Pasantia
 
     // Navigation 
     public Postulacion Postulacion {get; set;} = null!;
-    public Evaluaciones? Evaluacion {get; set;}
+    public Evaluacion? Evaluacion {get; set;}
     public Convenio? Convenio {get; set;}
 
 }

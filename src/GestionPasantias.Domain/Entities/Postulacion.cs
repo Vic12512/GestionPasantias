@@ -6,7 +6,7 @@ public class Postulacion
     public int EstudianteId {get; set;}
     public int VacanteId {get; set;}
     public int EstadoPostulacionId {get; set;}
-    public DateTime FechaPostulacion {get; set;}
+    public DateTime FechaPostulacion {get; set;} = DateTime.UtcNow;
 
     // Navigation 
     public Estudiante Estudiante {get; set;} = null!;

@@ -2,6 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using GestionPasantias.Application.Interfaces;
 using GestionPasantias.Application.DTOs.Auth;
 using GestionPasantias.Domain.Entities;
+using System.Text;
+using Microsoft.VisualBasic;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 
 namespace GestionPasantias.API.Controllers;
@@ -41,7 +46,7 @@ public class AuthController : ControllerBase
         var user = new User
         {
             Email = dto.Email,
-            PasswordHash = dto.PasswordHash,
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.PasswordHash),
             RolId = dto.RolId
         };
 
@@ -57,6 +62,52 @@ public class AuthController : ControllerBase
             createdUser.Email,
             createdUser.RolId
         });
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginDto dto)
+    {
+        var user = await _userRepository.GetByEmailAsync(dto.Email);
+
+            if (user == null)
+                return Unauthorized("User doesn't exist");
+
+            var isValidPassword = BCrypt.Net.BCrypt.Verify(dto.PasswordHash, user.PasswordHash);
+
+            if(!isValidPassword)
+                return Unauthorized("Invalid credentials");
+        
+        var token = GenerateJwtToken(user);
+
+        return Ok(new { token });
+    }
+
+    private string GenerateJwtToken(User user)
+    {
+        var config = HttpContext.RequestServices.GetRequiredService<IConfiguration>();
+
+        var key = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(config["Jwt:Key"]!)
+        );
+
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var claims = new[]
+        {
+            new Claim("id", user.Id.ToString()),
+            new Claim("email", user.Email),
+            new Claim("role", user.RolId.ToString())
+        };
+
+        var token = new JwtSecurityToken(
+            issuer: config["Jwt:Issuer"],
+            audience: config["Jwt:Audience"],
+            claims: claims,
+            expires: DateTime.UtcNow.AddHours(4),
+            signingCredentials: creds
+        );
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
 

@@ -31,4 +31,9 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync();
         return user;
     }
+
+    public async Task<bool> EmailExistAsync(String email)
+    {
+        return await _context.Users.AnyAsync(u => u.Email == email);
+    }
 }

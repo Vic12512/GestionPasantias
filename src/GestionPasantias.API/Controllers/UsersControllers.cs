@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using GestionPasantias.Application.Interfaces;
 using GestionPasantias.Domain.Entities;
 using System.Xml;
+using GestionPasantias.Application.DTOs.Users;
 
 namespace GestionPasantias.API.Controllers;
 
@@ -20,7 +21,15 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var users = await _userRepository.GetAllAsync();
-        return Ok(users);
+
+        var result = users.Select(u => new UserDto
+        {
+            Id = u.Id,
+            Email = u.Email,
+            RolId = u.RolId
+        });
+
+        return Ok(result);
     }
 
     /*

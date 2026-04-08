@@ -3,10 +3,10 @@ using GestionPasantias.Application.Interfaces;
 using GestionPasantias.Application.DTOs.Auth;
 using GestionPasantias.Domain.Entities;
 using System.Text;
-using Microsoft.VisualBasic;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace GestionPasantias.API.Controllers;
@@ -31,7 +31,7 @@ public class AuthController : ControllerBase
          if (string.IsNullOrWhiteSpace(dto.Email))
             return BadRequest("Email is required");
 
-        if (string.IsNullOrWhiteSpace(dto.PasswordHash))
+        if (string.IsNullOrWhiteSpace(dto.Password))
             return BadRequest("Password is required");
 
         if (dto.RolId <= 0)
@@ -46,7 +46,7 @@ public class AuthController : ControllerBase
         var user = new User
         {
             Email = dto.Email,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.PasswordHash),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
             RolId = dto.RolId
         };
 
@@ -72,14 +72,31 @@ public class AuthController : ControllerBase
             if (user == null)
                 return Unauthorized("User doesn't exist");
 
-            var isValidPassword = BCrypt.Net.BCrypt.Verify(dto.PasswordHash, user.PasswordHash);
+            var isValidPassword = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash);
 
             if(!isValidPassword)
                 return Unauthorized("Invalid credentials");
         
         var token = GenerateJwtToken(user);
 
-        return Ok(new { token });
+        return Ok(new { 
+            token,
+            user.Id,
+            user.Email,
+            user.RolId
+         });
+    }
+
+    [Authorize]
+    [HttpGet("source")]
+    public IActionResult SecureEndPoint()
+    {
+        return Ok("Authentification working");
+        /* Later On (to get the user data form JWT)
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var email = User.FindFirst(ClaimTypes.Email)?.Value;
+        var rol = User.FindFirst(ClaimTypes.Role)?.Value;   
+        */
     }
 
     private string GenerateJwtToken(User user)

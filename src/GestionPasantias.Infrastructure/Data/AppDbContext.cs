@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using GestionPasantias.Domain.Entities;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 
 namespace GestionPasantias.Infrastructure.Data;
@@ -38,6 +37,7 @@ public class AppDbContext : DbContext
 
     // Usuario
     public DbSet<User> Users => Set<User>();
+    public DbSet<Rol> Roles => Set<Rol>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -154,7 +154,7 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Postulacion>()
             .HasOne(p => p.Vacante)
-            .WithMany(v => v.postulaciones)
+            .WithMany(v => v.Postulaciones)
             .HasForeignKey(p => p.VacanteId)
             .OnDelete(DeleteBehavior.Restrict);
 

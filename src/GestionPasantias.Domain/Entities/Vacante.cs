@@ -14,5 +14,5 @@ public class Vacante
     // Navigation
     public Empresa Empresa {get; set;} = null!;
     public Supervisor Supervisor {get; set;} = null!;
-    public ICollection<Postulacion> postulaciones {get; set;} = new List<Postulacion>();
+    public ICollection<Postulacion> Postulaciones {get; set;} = new List<Postulacion>();
 }

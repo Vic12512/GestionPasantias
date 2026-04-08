@@ -91,12 +91,17 @@ public class AuthController : ControllerBase
     [HttpGet("source")]
     public IActionResult SecureEndPoint()
     {
-        return Ok("Authentification working");
-        /* Later On (to get the user data form JWT)
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         var email = User.FindFirst(ClaimTypes.Email)?.Value;
         var rol = User.FindFirst(ClaimTypes.Role)?.Value;   
-        */
+        
+        return Ok(new
+        {
+           Message = "Authentication working",
+           UserId = userId,
+           Email = email, 
+           Rol = rol
+        });
     }
 
     private string GenerateJwtToken(User user)

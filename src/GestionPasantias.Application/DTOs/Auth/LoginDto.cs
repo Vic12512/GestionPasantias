@@ -1,5 +1,3 @@
-using System.Globalization;
-
 namespace GestionPasantias.Application.DTOs.Auth;
 
 public class LoginDto

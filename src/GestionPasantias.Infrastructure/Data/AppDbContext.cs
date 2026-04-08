@@ -226,5 +226,17 @@ public class AppDbContext : DbContext
             .WithMany(u => u.ChatParticipantes)
             .HasForeignKey(cp => cp.UserId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        // =========================
+        // DATA
+        // =========================
+        modelBuilder.Entity<Rol>().HasData(
+            //new Rol { Id = 1, Nombre = "Admin" },
+            new Rol { Id = 2, Nombre = "Estudiante" },
+            new Rol { Id = 3, Nombre = "Tutor" },
+            new Rol { Id = 4, Nombre = "Supervisor" },
+            new Rol { Id = 5, Nombre = "Empresa" },
+            new Rol { Id = 6, Nombre = "Universidad" }
+        );
     }
 }

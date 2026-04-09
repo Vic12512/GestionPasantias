@@ -41,7 +41,7 @@ namespace GestionPasantias.Infrastructure.Migrations
 
                     b.HasIndex("UniversidadId");
 
-                    b.ToTable("Carreras");
+                    b.ToTable("Carreras", (string)null);
                 });
 
             modelBuilder.Entity("GestionPasantias.Domain.Entities.Chat", b =>
@@ -57,7 +57,7 @@ namespace GestionPasantias.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Chats");
+                    b.ToTable("Chats", (string)null);
                 });
 
             modelBuilder.Entity("GestionPasantias.Domain.Entities.ChatParticipante", b =>
@@ -72,7 +72,7 @@ namespace GestionPasantias.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ChatParticipante");
+                    b.ToTable("ChatParticipante", (string)null);
                 });
 
             modelBuilder.Entity("GestionPasantias.Domain.Entities.Convenio", b =>
@@ -102,7 +102,7 @@ namespace GestionPasantias.Infrastructure.Migrations
                     b.HasIndex("PasantiaId")
                         .IsUnique();
 
-                    b.ToTable("Convenios");
+                    b.ToTable("Convenios", (string)null);
                 });
 
             modelBuilder.Entity("GestionPasantias.Domain.Entities.Empresa", b =>
@@ -128,7 +128,7 @@ namespace GestionPasantias.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Empresas");
+                    b.ToTable("Empresas", (string)null);
                 });
 
             modelBuilder.Entity("GestionPasantias.Domain.Entities.EstadoPostulacion", b =>
@@ -145,7 +145,7 @@ namespace GestionPasantias.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EstadosPostulacion");
+                    b.ToTable("EstadosPostulacion", (string)null);
                 });
 
             modelBuilder.Entity("GestionPasantias.Domain.Entities.Estudiante", b =>
@@ -173,7 +173,7 @@ namespace GestionPasantias.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Estudiantes");
+                    b.ToTable("Estudiantes", (string)null);
                 });
 
             modelBuilder.Entity("GestionPasantias.Domain.Entities.Evaluacion", b =>
@@ -206,7 +206,7 @@ namespace GestionPasantias.Infrastructure.Migrations
 
                     b.HasIndex("SupervisorId");
 
-                    b.ToTable("Evaluaciones");
+                    b.ToTable("Evaluaciones", (string)null);
                 });
 
             modelBuilder.Entity("GestionPasantias.Domain.Entities.Mensaje", b =>
@@ -236,7 +236,7 @@ namespace GestionPasantias.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Mensajes");
+                    b.ToTable("Mensajes", (string)null);
                 });
 
             modelBuilder.Entity("GestionPasantias.Domain.Entities.Pasantia", b =>
@@ -261,7 +261,7 @@ namespace GestionPasantias.Infrastructure.Migrations
                     b.HasIndex("PostulacionId")
                         .IsUnique();
 
-                    b.ToTable("Pasantias");
+                    b.ToTable("Pasantias", (string)null);
                 });
 
             modelBuilder.Entity("GestionPasantias.Domain.Entities.Postulacion", b =>
@@ -293,7 +293,7 @@ namespace GestionPasantias.Infrastructure.Migrations
                     b.HasIndex("EstudianteId", "VacanteId")
                         .IsUnique();
 
-                    b.ToTable("Postulaciones");
+                    b.ToTable("Postulaciones", (string)null);
                 });
 
             modelBuilder.Entity("GestionPasantias.Domain.Entities.Rol", b =>
@@ -310,7 +310,7 @@ namespace GestionPasantias.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
 
                     b.HasData(
                         new
@@ -361,7 +361,7 @@ namespace GestionPasantias.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Supervisores");
+                    b.ToTable("Supervisores", (string)null);
                 });
 
             modelBuilder.Entity("GestionPasantias.Domain.Entities.Tutor", b =>
@@ -385,7 +385,7 @@ namespace GestionPasantias.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Tutores");
+                    b.ToTable("Tutores", (string)null);
                 });
 
             modelBuilder.Entity("GestionPasantias.Domain.Entities.Universidad", b =>
@@ -411,7 +411,7 @@ namespace GestionPasantias.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Universidades");
+                    b.ToTable("Universidades", (string)null);
                 });
 
             modelBuilder.Entity("GestionPasantias.Domain.Entities.User", b =>
@@ -437,7 +437,7 @@ namespace GestionPasantias.Infrastructure.Migrations
 
                     b.HasIndex("RolId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("GestionPasantias.Domain.Entities.Vacante", b =>
@@ -476,7 +476,7 @@ namespace GestionPasantias.Infrastructure.Migrations
 
                     b.HasIndex("SupervisorId");
 
-                    b.ToTable("Vacantes");
+                    b.ToTable("Vacantes", (string)null);
                 });
 
             modelBuilder.Entity("GestionPasantias.Domain.Entities.Carrera", b =>

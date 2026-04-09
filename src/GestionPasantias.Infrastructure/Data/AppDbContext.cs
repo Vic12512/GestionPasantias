@@ -238,5 +238,13 @@ public class AppDbContext : DbContext
             new Rol { Id = 5, Nombre = "Empresa" },
             new Rol { Id = 6, Nombre = "Universidad" }
         );
+
+        modelBuilder.Entity<EstadoPostulacion>().HasData(
+            new EstadoPostulacion { Id = 1, Nombre = "PendienteTutor" },
+            new EstadoPostulacion { Id = 2, Nombre = "AprobadaTutor" },
+            new EstadoPostulacion { Id = 3, Nombre = "AprobadaTutor" },
+            new EstadoPostulacion { Id = 4, Nombre = "AprobadaSupervisor" },
+            new EstadoPostulacion { Id = 5, Nombre = "AprobadaSupervisor" }
+        );
     }
 }

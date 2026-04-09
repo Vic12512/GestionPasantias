@@ -43,6 +43,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IVacanteRepository, VacanteRepository>();
+builder.Services.AddScoped<IPostulacionRepository, PostulacionRepository>();
 
 var app = builder.Build();
 

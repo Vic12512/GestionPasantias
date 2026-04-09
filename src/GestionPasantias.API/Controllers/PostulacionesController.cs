@@ -68,7 +68,7 @@ public class PostulacionesController : ControllerBase
             return BadRequest("Selected vacacy doesn't exist");
 
         var alreadyExist = await _postulacionRepository.PostulacionExistAsync(dto.EstudianteId, dto.VacanteId);
-        if(!alreadyExist)
+        if(alreadyExist)
             return BadRequest("Already applied to this vacancy.");
 
         /////////////////

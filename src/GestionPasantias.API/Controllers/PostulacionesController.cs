@@ -6,7 +6,7 @@ using GestionPasantias.Domain.Entities;
 namespace GestionPasantias.API.Controllers;
 
 [ApiController]
-[Route("api/[cotroller]")]
+[Route("api/[controller]")]
 public class PostulacionesController : ControllerBase
 {
     private readonly IPostulacionRepository _postulacionRepository;

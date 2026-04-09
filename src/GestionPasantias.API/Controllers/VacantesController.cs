@@ -71,8 +71,8 @@ public class VacantesController : ControllerBase
         if(dto.Cantidad <= 0)
             return BadRequest("The amount must be greater than 0");
 
-        if(dto.FechaFin <= dto. FechaInicio)
-            return BadRequest("The Start date must be greater than the End day");
+        if(dto.FechaFin <= dto.FechaInicio)
+            return BadRequest("The End date must be greater than the Start day");
         
         var empresaExist = await _vacanteRepository.EmpresaExistAsync(dto.EmpresaId);
         if(!empresaExist)
@@ -100,6 +100,7 @@ public class VacantesController : ControllerBase
 
         var result = new VacanteDto
         {
+            Id = created.Id,
             EmpresaId = created.EmpresaId,
             SupervisorId = created.SupervisorId,
             Titulo = created.Titulo,
@@ -109,7 +110,7 @@ public class VacantesController : ControllerBase
             FechaFin = created.FechaFin
         };
 
-        return CreatedAtAction(nameof(GetAll), new {id = created.Id, result});
+        return CreatedAtAction(nameof(GetVacante), new {id = created.Id, result});
     }
     
 }

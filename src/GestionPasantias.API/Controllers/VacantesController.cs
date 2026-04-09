@@ -109,8 +109,9 @@ public class VacantesController : ControllerBase
             FechaInicio = created.FechaInicio,
             FechaFin = created.FechaFin
         };
+        
+        return CreatedAtAction(nameof(GetVacante), new {id = created.Id}, result);
 
-        return CreatedAtAction(nameof(GetVacante), new {id = created.Id, result});
     }
     
 }

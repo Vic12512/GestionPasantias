@@ -42,6 +42,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IVacanteRepository, VacanteRepository>();
 
 var app = builder.Build();
 

@@ -1,0 +1,14 @@
+$kind: http-request
+name: Add Postulacion
+url: http://localhost:5103/api/Postulaciones
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"estudianteId\": #,\r
+
+    \  \"vacanteId\": #\r
+
+    }"
+order: 1509574183754436

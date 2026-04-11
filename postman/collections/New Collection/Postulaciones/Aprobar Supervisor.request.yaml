@@ -1,0 +1,8 @@
+$kind: http-request
+name: Aprobar Supervisor
+url: http://localhost:5103/api/Postulaciones/2/aprobar-supervisor
+method: PUT
+body:
+  type: json
+  content: "{\r\n  \"aprobada\": true\r\n}"
+order: 4255575798515759

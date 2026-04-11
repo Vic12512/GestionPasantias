@@ -1,0 +1,6 @@
+$kind: http-request
+name: List Postulaciones
+url: http://localhost:5103/api/Postulaciones
+method: GET
+examples: .resources/List Postulaciones.resources/examples
+order: 1775931573382

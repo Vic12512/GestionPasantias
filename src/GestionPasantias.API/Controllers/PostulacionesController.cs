@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using GestionPasantias.Application.DTOs.Postulaciones;
 using GestionPasantias.Application.Interfaces;
 using GestionPasantias.Domain.Entities;
+using Microsoft.VisualBasic;
+using System.Formats.Asn1;
 
 namespace GestionPasantias.API.Controllers;
 
@@ -10,10 +12,15 @@ namespace GestionPasantias.API.Controllers;
 public class PostulacionesController : ControllerBase
 {
     private readonly IPostulacionRepository _postulacionRepository;
+    private readonly IPasantiaRepository _pasantiaRepository;
 
-    public PostulacionesController(IPostulacionRepository postulacionRepository)
+    public PostulacionesController(
+        IPostulacionRepository postulacionRepository, 
+        IPasantiaRepository pasantiaRepository
+    )
     {
         _postulacionRepository = postulacionRepository;
+        _pasantiaRepository = pasantiaRepository;
     }
 
     [HttpGet]
@@ -95,6 +102,76 @@ public class PostulacionesController : ControllerBase
         
         return CreatedAtAction(nameof(GetPostulacion), new {id = created.Id}, result);
 
+    }
+
+    [HttpPut("{id}/aprobar-tutor")]
+    public async Task<IActionResult> AprobarTutor (int id, AprobarPostulacionDto dto)
+    {
+        var postulacion = await _postulacionRepository.GetByIdAsync(id);
+
+        if (postulacion == null)
+            return NotFound();
+
+        if (postulacion. EstadoPostulacionId !=1)
+            return BadRequest("This application in not pending");
+        
+        postulacion.EstadoPostulacionId = dto.Aprobada ? 2 : 3;
+
+        await _postulacionRepository.UpdateAsync(postulacion);
+
+        return Ok(new
+        {
+           Menssage = dto.Aprobada ? "Application approved by tutor." : "Application rejected by tutor",
+           postulacion.Id,
+           postulacion.EstadoPostulacionId
+        });
+    }
+
+    [HttpPut("{id}/aprobar-supervisor")]
+    public async Task<IActionResult> AprobarSupervisor(int id, AprobarPostulacionDto dto)
+    {
+        var postulacion = await _postulacionRepository.GetByIdAsync(id);
+
+        if (postulacion == null)
+            return NotFound();
+
+        if (postulacion.EstadoPostulacionId !=2)
+            return BadRequest("This application was denied by the Tutor");
+        
+        if (!dto.Aprobada)
+        {
+            postulacion.EstadoPostulacionId = 5;
+            await _postulacionRepository.UpdateAsync(postulacion);
+
+            return Ok(new
+            {
+                Message = "Applicantion Rejected By Supervisor.",
+                postulacion.Id,
+                postulacion.EstadoPostulacion
+            });
+        }
+
+        postulacion.EstadoPostulacionId = 4;
+        await _postulacionRepository.UpdateAsync(postulacion);
+
+        var pasantia = new Pasantia
+        {
+            PostulacionId = postulacion.Id,
+            FechaInicio = postulacion.Vacante.FechaInicio,
+            FechaFin = postulacion.Vacante.FechaFin
+        };
+
+        var createdPassantia = await _pasantiaRepository.AddAsync(pasantia);
+
+        return Ok(new
+        {
+            Message = "Application approved by supervisor. Intership created.",
+            postulacion.Id,
+            postulacion.EstadoPostulacionId,
+            PasantiaId = createdPassantia.Id,
+            createdPassantia.FechaInicio,
+            createdPassantia.FechaFin
+        });
     }
 
 }

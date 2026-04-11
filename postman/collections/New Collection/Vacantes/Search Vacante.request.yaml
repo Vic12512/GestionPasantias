@@ -1,0 +1,5 @@
+$kind: http-request
+name: Search Vacante
+url: http://localhost:5103/api/Vacantes/1
+method: GET
+order: 4353762557025243

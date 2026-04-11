@@ -1,0 +1,5 @@
+$kind: http-request
+name: List Vacantes
+url: http://localhost:5103/api/Vacantes
+method: GET
+order: 1775931919827

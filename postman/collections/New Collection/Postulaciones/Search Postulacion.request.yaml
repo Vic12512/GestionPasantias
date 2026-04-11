@@ -1,0 +1,5 @@
+$kind: http-request
+name: Search Postulacion
+url: http://localhost:5103/api/Postulaciones/2
+method: GET
+order: 3031557820001324

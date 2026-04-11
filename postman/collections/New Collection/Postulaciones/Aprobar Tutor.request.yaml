@@ -1,0 +1,8 @@
+$kind: http-request
+name: Aprobar Tutor
+url: http://localhost:5103/api/Postulaciones/3/aprobar-tutor
+method: PUT
+body:
+  type: json
+  content: "{\r\n  \"aprobada\": true\r\n}"
+order: 3889569613400773

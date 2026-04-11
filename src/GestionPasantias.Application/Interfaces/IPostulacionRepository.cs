@@ -10,5 +10,6 @@ public interface IPostulacionRepository
     Task<bool> EstudianteExistAsync(int estudianteId);
     Task<bool> VacanteExistAsync(int vacanteId);
     Task<bool> PostulacionExistAsync(int estudianteId, int vacanteId);
+    Task UpdateAsync(Postulacion postulacion);
 
 }

@@ -1,0 +1,7 @@
+$kind: http-request
+name: Protegida
+url: http://localhost:5103/api/Auth/source
+method: GET
+headers:
+  Authorization: "Bearer "
+order: 3664812698613182

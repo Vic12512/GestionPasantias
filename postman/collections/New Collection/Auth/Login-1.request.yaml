@@ -1,0 +1,16 @@
+$kind: http-request
+name: Login
+url: http://localhost:5103/api/Auth/login
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"email\": \"string\",\r
+
+    \  \"password\": \"string\",\r
+
+    \  \"rolId\": 0\r
+
+    }"
+order: 1775931262309

@@ -1,0 +1,5 @@
+$kind: http-request
+name: List Users
+url: http://localhost:5103/api/Users
+method: GET
+order: 1775931888640

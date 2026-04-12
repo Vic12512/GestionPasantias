@@ -2,8 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using GestionPasantias.Application.DTOs.Postulaciones;
 using GestionPasantias.Application.Interfaces;
 using GestionPasantias.Domain.Entities;
-using Microsoft.VisualBasic;
-using System.Formats.Asn1;
+using GestionPasantias.Domain.Constants;
 
 namespace GestionPasantias.API.Controllers;
 
@@ -78,6 +77,12 @@ public class PostulacionesController : ControllerBase
         if(alreadyExist)
             return BadRequest("Already applied to this vacancy.");
 
+        if (dto.EstudianteId <= 0)
+            return BadRequest("Invalid Student.");
+
+        if (dto.VacanteId <= 0)
+            return BadRequest("Invalid Vacancy.");
+
         /////////////////
         /// CREATION
         /////////////////
@@ -85,7 +90,7 @@ public class PostulacionesController : ControllerBase
         {
             EstudianteId = dto.EstudianteId,
             VacanteId = dto.VacanteId,
-            EstadoPostulacionId = 1,
+            EstadoPostulacionId = EstadoPostulacionConst.PendienteTutor,
             FechaPostulacion = DateTime.UtcNow
         };
 
@@ -112,10 +117,15 @@ public class PostulacionesController : ControllerBase
         if (postulacion == null)
             return NotFound();
 
-        if (postulacion. EstadoPostulacionId !=1)
+        if (id <= 0)
+            return BadRequest("Invalid application id.");
+
+        if (postulacion. EstadoPostulacionId != EstadoPostulacionConst.PendienteTutor)
             return BadRequest("This application in not pending");
         
-        postulacion.EstadoPostulacionId = dto.Aprobada ? 2 : 3;
+        postulacion.EstadoPostulacionId = dto.Aprobada 
+            ? EstadoPostulacionConst.AprobadaTutor 
+            : EstadoPostulacionConst.RechazadaSupervisor;
 
         await _postulacionRepository.UpdateAsync(postulacion);
 
@@ -135,12 +145,15 @@ public class PostulacionesController : ControllerBase
         if (postulacion == null)
             return NotFound();
 
-        if (postulacion.EstadoPostulacionId !=2)
+        if (id <= 0)
+            return BadRequest("Invalid application id.");
+
+        if (postulacion.EstadoPostulacionId != EstadoPostulacionConst.AprobadaTutor)
             return BadRequest("This application was denied by the Tutor");
         
         if (!dto.Aprobada)
         {
-            postulacion.EstadoPostulacionId = 5;
+            postulacion.EstadoPostulacionId = EstadoPostulacionConst.RechazadaSupervisor;
             await _postulacionRepository.UpdateAsync(postulacion);
 
             return Ok(new
@@ -151,8 +164,12 @@ public class PostulacionesController : ControllerBase
             });
         }
 
-        postulacion.EstadoPostulacionId = 4;
+        postulacion.EstadoPostulacionId = EstadoPostulacionConst.AprobadaSupervisor;
         await _postulacionRepository.UpdateAsync(postulacion);
+
+        var pasantiaExist = await _pasantiaRepository.ExistByPostulacionIdAsync(postulacion.Id);
+        if (pasantiaExist)
+            return BadRequest("This application already has an intership created.");
 
         var pasantia = new Pasantia
         {

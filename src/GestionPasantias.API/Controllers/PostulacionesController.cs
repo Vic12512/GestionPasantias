@@ -186,7 +186,7 @@ public class PostulacionesController : ControllerBase
 
         var createdPassantia = await _pasantiaRepository.AddAsync(pasantia);
         
-        var convenioExist = await _convenioRepository.ExistByPasantiaIdAsync(createdPasantia.Id);
+        var convenioExist = await _convenioRepository.ExistByPasantiaIdAsync(createdPassantia.Id);
         if (convenioExist)
             return BadRequest("This intership already has an agreement created.");
 

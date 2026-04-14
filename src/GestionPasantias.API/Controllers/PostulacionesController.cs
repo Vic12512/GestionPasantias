@@ -68,6 +68,12 @@ public class PostulacionesController : ControllerBase
         /////////////////
         /// VALIDATIONS
         /////////////////
+        if (dto.EstudianteId <= 0)
+            return BadRequest("Invalid Student.");
+
+        if (dto.VacanteId <= 0)
+            return BadRequest("Invalid Vacancy.");
+
         var estudianteExist = await _postulacionRepository.EstudianteExistAsync(dto.EstudianteId);
         if(!estudianteExist)
             return BadRequest("Selected student doesn't exist");
@@ -79,12 +85,6 @@ public class PostulacionesController : ControllerBase
         var alreadyExist = await _postulacionRepository.PostulacionExistAsync(dto.EstudianteId, dto.VacanteId);
         if(alreadyExist)
             return BadRequest("Already applied to this vacancy.");
-
-        if (dto.EstudianteId <= 0)
-            return BadRequest("Invalid Student.");
-
-        if (dto.VacanteId <= 0)
-            return BadRequest("Invalid Vacancy.");
 
         /////////////////
         /// CREATION
@@ -128,7 +128,7 @@ public class PostulacionesController : ControllerBase
         
         postulacion.EstadoPostulacionId = dto.Aprobada 
             ? EstadoPostulacionConst.AprobadaTutor 
-            : EstadoPostulacionConst.RechazadaSupervisor;
+            : EstadoPostulacionConst.RechazadaTutor;
 
         await _postulacionRepository.UpdateAsync(postulacion);
 
@@ -166,6 +166,7 @@ public class PostulacionesController : ControllerBase
                 Message = "Applicantion Rejected By Supervisor.",
                 postulacion.Id,
                 postulacion.EstadoPostulacion
+                //postulacion.EstadoPostulacionId
             });
         }
 
@@ -185,7 +186,7 @@ public class PostulacionesController : ControllerBase
 
         var createdPassantia = await _pasantiaRepository.AddAsync(pasantia);
         
-        var convenioExist = await _convenioRepository.ExistByPasantiaIdAsync(pasantia.Id);
+        var convenioExist = await _convenioRepository.ExistByPasantiaIdAsync(createdPasantia.Id);
         if (convenioExist)
             return BadRequest("This intership already has an agreement created.");
 

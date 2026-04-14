@@ -23,6 +23,12 @@ public class PostulacionRepository: IPostulacionRepository
     {
         return await _context.Postulaciones
             .Include(p => p.Vacante)
+                .ThenInclude(v => v.Empresa)
+            .Include(p => p.Estudiante)
+                .ThenInclude(e => e.User)
+            .Include(p => p.Estudiante)
+                .ThenInclude(e => e.Carrera)
+                    .ThenInclude(c => c.Universidad)    
             .FirstOrDefaultAsync(p => p.Id == id);
     }
 

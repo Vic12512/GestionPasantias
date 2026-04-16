@@ -13,6 +13,16 @@ public class ConvenioRepository : IConvenioRepository
         _context = context;
     }
 
+    public async Task<IEnumerable<Convenio>> GetAllAsync()
+    {
+        return await _context.Convenios.ToListAsync();
+    }
+
+    public async Task<Convenio?> GetByIdAsync(int id)
+    {
+        return await _context.Convenios.FindAsync(id);
+    }
+
     public async Task<Convenio> AddAsync(Convenio convenio)
     {
         await _context.Convenios.AddAsync(convenio);

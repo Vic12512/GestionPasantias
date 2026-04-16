@@ -14,6 +14,16 @@ public class PasantiaRepository : IPasantiaRepository
         _context = context;
     }
 
+    public async Task<IEnumerable<Pasantia>> GetAllAsync()
+    {
+        return await _context.Pasantias.ToListAsync();
+    }
+
+    public async Task<Pasantia?> GetByIdAsync(int id)
+    {
+        return await _context.Pasantias.FindAsync(id);
+    }
+
     public async Task<Pasantia> AddAsync(Pasantia pasantia)
     {
         await _context.Pasantias.AddAsync(pasantia);

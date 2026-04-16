@@ -46,6 +46,7 @@ builder.Services.AddScoped<IVacanteRepository, VacanteRepository>();
 builder.Services.AddScoped<IPostulacionRepository, PostulacionRepository>();
 builder.Services.AddScoped<IPasantiaRepository, PasantiaRepository>();
 builder.Services.AddScoped<IConvenioRepository, ConvenioRepository>();
+builder.Services.AddScoped<IEvaluacionRepository, EvaluacionRepository>();
 
 var app = builder.Build();
 

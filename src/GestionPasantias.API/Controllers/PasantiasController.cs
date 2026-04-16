@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using GestionPasantias.Domain.Entities;
 using GestionPasantias.Application.DTOs.Pasantias;
 using GestionPasantias.Application.Interfaces;
 
@@ -8,11 +7,11 @@ namespace GestionPasantias.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PasantiaController : ControllerBase
+public class PasantiasController : ControllerBase
 {
     private readonly IPasantiaRepository _pasantiaRepository;
 
-    public PasantiaController(IPasantiaRepository pasantiaRepository)
+    public PasantiasController(IPasantiaRepository pasantiaRepository)
     {
         _pasantiaRepository = pasantiaRepository;
     }
